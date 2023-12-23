@@ -17,6 +17,7 @@ public class ButtonStart : MonoBehaviour
         Main.score = 0;
         ButtonMore.count = 0;
         Main.hands.Clear();
+        Main.message = "";
         card1.GetComponent<Card>().NewCardAdd();
         card2.GetComponent<Card>().NewCardAdd();
         card3.SetActive(false);

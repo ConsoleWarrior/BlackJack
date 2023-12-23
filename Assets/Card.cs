@@ -8,23 +8,25 @@ public class Card : MonoBehaviour
     public int index = 0;
     public int value = 0;
 
-    void Start()
-    {
-        //Sprite[] sprites = Resources.FindObjectsOfTypeAll<Sprite>();
-    }
     public void NewCardAdd()
     {
-        Debug.Log("good");
         index = NewUnicIndex();
         GetComponent<SpriteRenderer>().sprite = sprites[index];
         Main.hands.Add(index);
         Main.UpdateScore();
     }
-    int NewUnicIndex()
+    int NewUnicIndex() //новый индекс карты в колоде
     {
         int nextIndex = Random.Range(0, 52);
-        if (Main.hands.Contains(nextIndex)) return NewUnicIndex();
+        if (Main.hands.Contains(nextIndex)||Main.handsAI.Contains(nextIndex)) return NewUnicIndex();
         else return nextIndex;
+    }
+        public void NewCardAddToAI()
+    {
+        index = NewUnicIndex();
+        GetComponent<SpriteRenderer>().sprite = sprites[index];
+        Main.handsAI.Add(index);
+        Main.UpdateScoreAI();
     }
 }
 

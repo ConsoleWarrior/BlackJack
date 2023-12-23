@@ -6,18 +6,28 @@ using UnityEngine.UI;
 public class Main : MonoBehaviour
 {
     public Text myScore;
+    public Text scoreAiText;
+    public Text resultOfGame;
+    public static string message;
     public static int score = 0;
+    public static int scoreAI = 0;
     public static List<int> hands;
+    public static List<int> handsAI;
+
+
     void Start()
     {
         hands = new List<int>();
+        handsAI = new List<int>();
+
     }
 
 
     void Update()
     {
         myScore.text = score.ToString();
-
+        resultOfGame.text = message;
+        scoreAiText.text = scoreAI.ToString();
     }
     
     public static void UpdateScore()
@@ -45,20 +55,66 @@ public class Main : MonoBehaviour
             valuesHands.Add(value);
             tempScore += value;
         }
-        if (tempScore > 21)         //���� ����
+        if (tempScore > 21)         
         {
-            //if (hands.Contains(0)|| hands.Contains(13)|| hands.Contains(26)|| hands.Contains(39)) Debug.Log("0,13,26,39");
+            bool firstAce = true;
             for(int i=0; i<valuesHands.Count;i++)
             {
-                if (valuesHands[i] == 11)
+                if (valuesHands[i] == 11&firstAce)
                 {
                     valuesHands[i] = 1;
                     tempScore -= 10;
+                    firstAce = false;
                 }
             }
-        }
+            if (tempScore > 21)
+            {
+                Main.message = "Ты проиграл!";
 
-        //if (value == 11 & Main.score + value > 21) value = 1;
+            }
+        }
         score = tempScore;
+    }
+
+    public static void UpdateScoreAI()
+    {
+        int value = 0; int tempScore = 0;
+        List<int> valuesHands = new List<int>();
+        foreach (var item in handsAI)
+        {
+            switch (item % 13)
+            {
+                case 0: value = 11; break;
+                case 1: value = 2; break;
+                case 2: value = 3; break;
+                case 3: value = 4; break;
+                case 4: value = 5; break;
+                case 5: value = 6; break;
+                case 6: value = 7; break;
+                case 7: value = 8; break;
+                case 8: value = 9; break;
+                case 9: value = 10; break;
+                case 10: value = 10; break;
+                case 11: value = 10; break;
+                case 12: value = 10; break;
+            }
+            valuesHands.Add(value);
+            tempScore += value;
+        }
+        if (tempScore > 21)         
+        {
+            bool firstAce = true;
+            for (int i=0; i<valuesHands.Count;i++)
+            {
+                if (valuesHands[i] == 11&firstAce)
+                {
+                    valuesHands[i] = 1;
+                    tempScore -= 10;
+                    firstAce = false;
+                }
+            }
+            if (tempScore > 21) Main.message = "Дилер перебрал!";
+        }
+        scoreAI = tempScore;
     } 
 }
