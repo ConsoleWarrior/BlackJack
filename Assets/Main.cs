@@ -5,15 +5,21 @@ using UnityEngine.UI;
 
 public class Main : MonoBehaviour
 {
-    public Text myScore;
-    public Text scoreAiText;
+    public Text myScoreT;
+    public Text scoreAiT;
     public Text resultOfGame;
     public static string message;
     public static int score = 0;
     public static int scoreAI = 0;
     public static List<int> hands;
     public static List<int> handsAI;
-
+    public static int cash = 1000;
+    public static int bet = 10;
+    public static int win = 0;
+    public Text cashT;
+    public Text betT;
+    public Text winT;
+    public static bool isBJ = false;
 
     void Start()
     {
@@ -22,99 +28,22 @@ public class Main : MonoBehaviour
 
     }
 
-
     void Update()
     {
-        myScore.text = score.ToString();
+        myScoreT.text = score.ToString();
         resultOfGame.text = message;
-        scoreAiText.text = scoreAI.ToString();
+        scoreAiT.text = scoreAI.ToString();
+        cashT.text = cash.ToString();
+        betT.text = bet.ToString();
+        winT.text = win.ToString();
     }
-    
-    public static void UpdateScore()
+    public void IncreaseBet()
     {
-        int value = 0; int tempScore = 0;
-        List<int> valuesHands = new List<int>();
-        foreach (var item in hands)
-        {
-            switch (item % 13)
-            {
-                case 0: value = 11; break;
-                case 1: value = 2; break;
-                case 2: value = 3; break;
-                case 3: value = 4; break;
-                case 4: value = 5; break;
-                case 5: value = 6; break;
-                case 6: value = 7; break;
-                case 7: value = 8; break;
-                case 8: value = 9; break;
-                case 9: value = 10; break;
-                case 10: value = 10; break;
-                case 11: value = 10; break;
-                case 12: value = 10; break;
-            }
-            valuesHands.Add(value);
-            tempScore += value;
-        }
-        if (tempScore > 21)         
-        {
-            bool firstAce = true;
-            for(int i=0; i<valuesHands.Count;i++)
-            {
-                if (valuesHands[i] == 11&firstAce)
-                {
-                    valuesHands[i] = 1;
-                    tempScore -= 10;
-                    firstAce = false;
-                }
-            }
-            if (tempScore > 21)
-            {
-                Main.message = "Ты проиграл!";
-
-            }
-        }
-        score = tempScore;
+        bet += 10;
     }
-
-    public static void UpdateScoreAI()
+    public void DecreaseBet()
     {
-        int value = 0; int tempScore = 0;
-        List<int> valuesHands = new List<int>();
-        foreach (var item in handsAI)
-        {
-            switch (item % 13)
-            {
-                case 0: value = 11; break;
-                case 1: value = 2; break;
-                case 2: value = 3; break;
-                case 3: value = 4; break;
-                case 4: value = 5; break;
-                case 5: value = 6; break;
-                case 6: value = 7; break;
-                case 7: value = 8; break;
-                case 8: value = 9; break;
-                case 9: value = 10; break;
-                case 10: value = 10; break;
-                case 11: value = 10; break;
-                case 12: value = 10; break;
-            }
-            valuesHands.Add(value);
-            tempScore += value;
-        }
-        if (tempScore > 21)         
-        {
-            bool firstAce = true;
-            for (int i=0; i<valuesHands.Count;i++)
-            {
-                if (valuesHands[i] == 11&firstAce)
-                {
-                    valuesHands[i] = 1;
-                    tempScore -= 10;
-                    firstAce = false;
-                }
-            }
-            if (tempScore > 21) Main.message = "Дилер перебрал!";
-        }
-        scoreAI = tempScore;
-    } 
+        bet -= 10;
+        if(bet < 0) bet = 0;
+    }
 }

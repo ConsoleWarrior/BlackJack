@@ -18,11 +18,13 @@ public class ButtonStart : MonoBehaviour
         ButtonMore.count = 0;
         Main.hands.Clear();
         Main.message = "";
+        Main.isBJ = false;
         card1.GetComponent<Card>().NewCardAdd();
         card2.GetComponent<Card>().NewCardAdd();
         card3.SetActive(false);
         card4.SetActive(false); 
         card5.SetActive(false);
         card6.SetActive(false);
+
     }
 }
