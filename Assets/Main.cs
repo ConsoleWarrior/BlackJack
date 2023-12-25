@@ -20,9 +20,12 @@ public class Main : MonoBehaviour
     public Text betT;
     public Text winT;
     public static bool isBJ = false;
+    public GameObject losePict;
+    public Button buttonStart;
 
     void Start()
     {
+        if (PlayerPrefs.HasKey("Cash")) cash = PlayerPrefs.GetInt("Cash");
         hands = new List<int>();
         handsAI = new List<int>();
 
@@ -36,14 +39,32 @@ public class Main : MonoBehaviour
         cashT.text = cash.ToString();
         betT.text = bet.ToString();
         winT.text = win.ToString();
-    }
+        if (cash < bet) bet = cash;
+        if (cash <= 0) LoseQuery();
+    } 
     public void IncreaseBet()
     {
-        bet += 10;
+        if(bet<cash) bet += 10;
     }
     public void DecreaseBet()
     {
         bet -= 10;
         if(bet < 0) bet = 0;
+    }
+    public void Exit()
+    {
+        PlayerPrefs.SetInt("Cash", cash);
+        Application.Quit();
+    }
+    public void LoseQuery()
+    {
+        losePict.SetActive(true);
+        buttonStart.interactable = false;
+    }
+    public void RestartClick()
+    {
+        cash = 1000;
+        buttonStart.interactable = true;
+        losePict.SetActive(false);
     }
 }

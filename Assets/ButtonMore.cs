@@ -14,6 +14,9 @@ public class ButtonMore : MonoBehaviour
     public Button buttonMore;
     public Button buttonStart;
     public GameObject card1AI;
+    public Text winT;
+    public Button betIn;
+    public Button betDe;
 
     public void ActiveNextCard()
     {
@@ -33,8 +36,12 @@ public class ButtonMore : MonoBehaviour
             Main.message = "Перебор!";
             Main.cash -= Main.bet;
             Main.win = -Main.bet;
+            winT.color = Color.red;
             buttonMore.interactable = false; 
             buttonEnough.interactable = false;
+            buttonStart.interactable = true;
+            betDe.interactable = true;
+            betIn.interactable = true;
         }
         if (Main.score == 21 && card3.activeSelf==false)
         {
@@ -49,8 +56,11 @@ public class ButtonMore : MonoBehaviour
                 Main.message = "Блэк Джек! Твоя Победа!";
                 Main.cash += (int)(Main.bet * 1.5);
                 Main.win = (int)(Main.bet*1.5);
+                winT.color = Color.green;
                 buttonStart.interactable = true;
                 buttonEnough.interactable = false;
+                betDe.interactable = true;
+                betIn.interactable = true;
             }
         }
         if (Main.score == 21 & card3.activeSelf)
